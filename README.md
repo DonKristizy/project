@@ -1,1 +1,1 @@
-"# project" 
+An E-Commerce assignment on Kolocci.com.ng
