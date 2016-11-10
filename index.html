@@ -80,9 +80,10 @@
 	<script type="text/javascript" src="skin/frontend/base/default/js/featured/noconflict.js"></script>
 	<script type="text/javascript" src="skin/frontend/base/default/js/featured/owl.carousel.js"></script>
 	<script type="text/javascript" src="skin/frontend/shopper/default/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-	<script type="text/javascript" src="skin/frontend/shopper/default/js/script.js"></script>
-	<script type="text/javascript" src="skin/frontend/shopper/default/js/ajaxcart/ajaxcart.js"></script>
-	<script type="text/javascript" src="skin/frontend/shopper/default/js/ajaxwishlist/ajaxwishlist.js"></script>
+	<!-- This thingy is giving me errors -->
+	<!-- <script type="text/javascript" src="skin/frontend/shopper/default/js/script.js"></script> -->
+	<!-- <script type="text/javascript" src="skin/frontend/shopper/default/js/ajaxcart/ajaxcart.js"></script> -->
+	<!-- <script type="text/javascript" src="skin/frontend/shopper/default/js/ajaxwishlist/ajaxwishlist.js"></script> -->
 	<!--[if lt IE 8]>
 <link rel="stylesheet" type="text/css" href="http://kolocci.com.ng/skin/frontend/shopper/default/css/styles-ie.css" media="all" />
 <![endif]-->
@@ -758,7 +759,7 @@ optionalZipCountries = ["NG"];
 							<div class="grid_3 fnletter">
 								<div class="block block-subscribe">
 									<h4>newsletters signup</h4>
-									<form action="http://kolocci.com.ng/index.php/newsletter/subscriber/new/" method="post" id="newsletter-validate-detail">
+									<form method="post" id="newsletter-validate-detail nletter">
 										<div class="block-content">
 											<div class="form-subscribe-header">
 												<p style="text-align: left;">Get latest News and Updates</p>
@@ -768,7 +769,7 @@ optionalZipCountries = ["NG"];
 													placeholder="Your Email" />
 											</div>
 											<div class="actions">
-												<button type="submit" title="Subscribe" class="button"><span><span>Subscribe</span></span></button>
+												<button type="submit" title="Subscribe" class="button" id="subNow"><span><span>Subscribe</span></span></button>
 											</div>
 										</div>
 									</form>
@@ -854,7 +855,7 @@ document.write(d.getFullYear())
 				<div id="show_div" style="display:none;">
 					<div class="block block-subscribe">
 						<h4>newsletters signup</h4>
-						<form action="http://kolocci.com.ng/index.php/newsletter/subscriber/new/" method="post" id="newsletter-validate-detail">
+						<form method="post" id="newsletter-validate-detail nletter">
 							<div class="block-content">
 								<div class="form-subscribe-header">
 									<p style="text-align: left;">Get latest News and Updates</p>
@@ -864,7 +865,7 @@ document.write(d.getFullYear())
 										placeholder="Your Email" />
 								</div>
 								<div class="actions">
-									<button type="submit" title="Subscribe" class="button"><span><span>Subscribe</span></span></button>
+									<button type="submit" title="Subscribe" class="button" id="subNow"><span><span>Subscribe</span></span></button>
 								</div>
 							</div>
 						</form>
@@ -875,31 +876,58 @@ document.write(d.getFullYear())
     </script>
 					</div>
 				</div>
-				<script type="text/javascript">
-		  (function($) {
-    $(document).ready(function() {
-    if (document.cookie.indexOf('visited=true') == -1) {
-			var oneDay = 1000*60*60*24*1;
-			var expires = new Date((new Date()).valueOf() + oneDay);
-			document.cookie = "visited=true;expires=" + expires.toUTCString();
-		
-    
-        $.fancybox(
-             $("#show_div").html(), //fancybox works perfect with hidden divs
-             {
-                'autoSize'                   : false,
-                'autoScale'                 : true,
-		'width'			: '290',
-		'height'			: '290',
-                'opacity'		        : false,
-		'openEffect'		: 'fade',
-		'closeEffect'		: 'fade',
-             }
-        );
-        }
-    });
-    })(jQuery);
-</script>
+	<script type="text/javascript">
+		(function($) {
+		    $(document).ready(function() {
+			    if (document.cookie.indexOf('visited=true') == -1) {
+						var oneDay = 1000*60*60*24*1;
+						var expires = new Date((new Date()).valueOf() + oneDay);
+						document.cookie = "visited=true;expires=" + expires.toUTCString();
+					
+			    
+			        $.fancybox(
+			             $("#show_div").html(), //fancybox works perfect with hidden divs
+			             {
+			                'autoSize'                   : false,
+			                'autoScale'                 : true,
+					'width'			: '290',
+					'height'			: '290',
+			                'opacity'		        : false,
+					'openEffect'		: 'fade',
+					'closeEffect'		: 'fade',
+			             }
+			        );
+		        }
+
+		        $('#subNow').click(function(e){
+		        	alert('hy');
+		        	e.preventDefault();
+		        	email = $(this).parent().parent().find('#newsletter').val();
+		        	alert('sending...'+email);
+		        	var data = {
+				    	"action": "nletter",
+				    	"email": email
+				    };
+				    data = $.param(data);
+				    $.ajax({
+				        type: "POST",
+				        // dataType: "json",
+				        url: "inc/serv.php",
+				        data: data,
+				        success:function(result){
+				            if (result == 'plus') {
+				            	// Please display the notications in a more fancy way here
+				                alert('Insert was successul! You can display your notications appropriately with jquery line 914 (index.html)');
+				            } else {
+				                // Please display the errors in a more fancy way here
+				                alert('ERROR: '+result);
+				            }
+				         }
+				    });
+		        });
+		    });
+	    })(jQuery);
+		</script>
 
 			</div>
 

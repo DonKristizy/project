@@ -1,0 +1,6 @@
+Quick Setup>>
+
+1. Go to phpmyadmin and create a database
+2. Copy folder to your server directory
+3. Visit the setup page... path-to-project/setup
+4. Fill the simple form with the appropraite information and enter the name of the database you created
